@@ -1,28 +1,57 @@
+import java.io.File;
+import java.io.PrintWriter;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
-import java.nio.channels.DatagramChannel;
+import java.io.FileWriter;
 
 public class UdpServer {
 
-    public static void main(String[] args) throws Exception {
+	public static void  main(String[] args) throws Exception{
+		
+		System.out.print("hello");
+		DatagramSocket s=new DatagramSocket(65535);
+	    InetAddress ia=InetAddress.getLocalHost();
+		byte[]filename=new byte[1000];
+		byte[]b=new byte[10000000];
         
+        
+		//receiving name
+        
+		DatagramPacket name=new DatagramPacket(filename,filename.length);
+        // System.out.println(name);
+		s.receive(name);
+		System.out.print("hello");
+		System.out.println(new String(name.getData()));
 
-        DatagramSocket ds = new DatagramSocket(9999);
 
-        byte[] b1 = new byte[1024];
+		DatagramPacket p=new DatagramPacket(b,b.length);
+		s.receive(p);
+		System.out.print("hello");
+		System.out.println(new String(p.getData()));
+		
+		
+		//String rec="Received your packet";
+		//byte[] b1=rec.getBytes();
+		//System.out.println(b1);
+		//DatagramPacket p1=new DatagramPacket(b1,b1.length,ia,p.getPort());
+		//s.send(p1);
+		
+		String fname=new String(name.getData()).trim();
+		fname="//workspace//socketProgramming//client"+fname;
+		System.out.println(fname);
+		
+		String filedata=new String(p.getData()).trim();
+		System.out.println(filedata);
 
-        DatagramPacket dp = new DatagramPacket(b1, b1.length);
-        ds.receive(dp);
-        String str = new String(dp.getData());
-        int num = Integer.parseInt(str.trim());
-        int result = num*num;
-        byte[] b2 = (result + "").getBytes();
-        InetAddress ia = InetAddress.getLocalHost();
-        // DatagramPacket dp1 = new DatagramPacket(b2, b2.length, ia, dp.getPort());
-        DatagramPacket dp1 = new DatagramPacket(b2, b2.length, ia, dp.getPort());
-        ds.send(dp1);
-
-    }
-    
+	
+		PrintWriter pw = new PrintWriter(fname);
+		pw.println(filedata);
+		pw.close();
+		
+		
+		
+		
+		
+	}
 }
