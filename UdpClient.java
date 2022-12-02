@@ -64,8 +64,7 @@ public class UdpClient {
 
 				// file handling and append to it 
 
-			    
-			    // System.out.println("---------------------------");
+	
 			}
 			
 			System.out.println(sb1.toString());
